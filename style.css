@@ -1,0 +1,96 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* Lato: Regular 400, Black 900 */
+body{
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Lato', sans-serif;
+}
+
+header{
+    max-height: 10%;
+    width: 100%;
+    padding: 20px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: brown;
+    color: white;
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+}
+main.container{
+    width: 100%;
+    min-height: 80%;
+    margin: 0;
+    position: fixed;
+    top: 10%;
+    left: 0;
+    background-color: whitesmoke;
+}
+.container main{
+    width: 75%;
+    min-height: 80%;
+    position: fixed;
+    top: 10%;
+    right: 0;
+}
+.container>aside{
+    width: 25%;
+    min-height: 80%;
+    margin: 0;
+    border-right: 1px solid rgba(0,0,0,0.4);
+    position: fixed;
+    top: 10%;
+    left: 0;
+    text-align: center;
+}
+footer{
+    height:10%;
+    width: 100%;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: 15px;
+    line-height: 180%;
+    background-color: brown;
+    color: white;
+    text-align: center;
+}
+
+.add-list-btn{
+    border: none;
+    font-size: 50px;
+    color: rgba(0,0,0,0.5);
+    background-color: transparent;
+    padding: 20px;
+}
+
+.task-options{
+    width: 8%;
+    height: auto;
+    position: fixed;
+    top: 15%;
+    right: 0;
+}
+.task-options button{
+    display: block;
+    border: none;
+    font-size: 30px;
+    color: rgba(0,0,0,0.5);
+    background-color: transparent;
+    padding: 15px;
+}
+button:hover{
+    cursor: pointer;
+    color: rgba(0,0,0,0.8);
+}
+button:focus{
+    outline: none;
+}
