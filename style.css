@@ -18,7 +18,7 @@ header{
     position: fixed;
     top: 0;
     left: 0;
-    background-color: brown;
+    background-color: rgb(165, 42, 42);
     color: white;
     font-weight: 900;
     text-align: center;
@@ -66,31 +66,82 @@ footer{
 
 .add-list-btn{
     border: none;
+    padding: 20px;
     font-size: 50px;
     color: rgba(0,0,0,0.5);
     background-color: transparent;
-    padding: 20px;
 }
 
 .task-options{
-    width: 8%;
+    width: auto;
     height: auto;
     position: fixed;
     top: 15%;
     right: 0;
+    padding-right: 15px;
 }
 .task-options button{
     display: block;
     border: none;
-    font-size: 30px;
+    padding: 15px;
+    font-size: 25px;
     color: rgba(0,0,0,0.5);
     background-color: transparent;
-    padding: 15px;
 }
-button:hover{
+.task-options button:hover{
+    font-size: 30px;
+    transition: 0.5s;
+}
+button:hover {
     cursor: pointer;
     color: rgba(0,0,0,0.8);
 }
-button:focus{
+button:focus, input[type="submit"]:focus{
     outline: none;
+}
+input[type="submit"]:hover{
+    cursor: pointer;
+}
+
+.new-list-form .list-name{
+    width: 50%;
+    line-height: 200%;
+    background-color:rgba(165, 42, 42, 0.4) ;
+    border: 3px solid brown;
+
+}
+
+.new-list-form .submit-new-list{
+    width: 20%;
+    line-height: 200%;
+    padding: 20px auto;
+    background-color: brown;
+    color: white;
+    border: 1px solid brown;
+    border-radius: 5%;
+    
+}
+
+.panel ul{
+
+    text-align: left;
+    padding-left: 30px;
+}
+
+.panel ul li{
+    line-height: 180%;
+    margin: 20px 0;
+    text-transform: uppercase;
+    width: auto;
+    
+}
+.panel ul li i{
+    font-size: 20px;
+    color: gray;
+    vertical-align: text-top;
+}
+.panel ul li:hover{
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
 }
