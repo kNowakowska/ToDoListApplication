@@ -76,7 +76,7 @@ footer{
     width: auto;
     height: auto;
     position: fixed;
-    top: 15%;
+    top: 20%;
     right: 0;
     padding-right: 15px;
 }
@@ -144,4 +144,13 @@ input[type="submit"]:hover{
     font-weight: 700;
     letter-spacing: 1px;
     cursor: pointer;
+}
+
+.task-list .list-name {
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    
 }
