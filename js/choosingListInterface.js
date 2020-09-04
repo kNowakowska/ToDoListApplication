@@ -3,15 +3,15 @@ $(function(){
     let setOfLists = [
         {
             name:"lista1",
-            tasks: []
+            tasks: ["sleep", "eat","do things"]
         },
         {
             name: "lista5",
-            tasks: []
+            tasks: ["code", "code", "code"]
         },
         {
             name:"moja lista",
-            tasks: []
+            tasks: ["nic"]
         }
     ]
 
@@ -22,6 +22,9 @@ $(function(){
     const $listNameInput = $("input.list-name");
     const $listName = $(".task-list .list-name");
     const $deleteListBtn = $(".task-options .delete-list");
+    const $addTaskForm = $(".task-list form");
+    const $addTaskBtn = $(".task-options .add-task");
+    const $taskContainer = $(".task-list ul");
 
     function deleteElement(name, flag){
         for(let i=0; i<setOfLists.length && flag; i++){
@@ -32,14 +35,24 @@ $(function(){
         }
     }
 
-    $addListBtn.show();
+    function findIndex(title){
+        for(let i=0; i<setOfLists.length; i++){
+            if(setOfLists[i].name==title){
+                return i;
+            }
+        }
+    }
+
     $newListForm.hide();
+    $addTaskForm.hide();
+
 
     if(setOfLists.length>0){
         for(let i=0; i<setOfLists.length; i++){
             let item = '<li data-name="'+setOfLists[i].name+'">'+setOfLists[i].name+' <i class="fas fa-times-circle"></i></li>';
             $(".fa-times-circle").hide();
             $listsContainer.append(item);
+            
         }
     }
 
@@ -82,8 +95,16 @@ $(function(){
     })
 
     $listsContainer.on("click","li", function(){
-        $listName.attr("data-name", $(this).attr("data-name"));
-        $listName.text($(this).attr("data-name"));
+        let name = $(this).attr("data-name");
+        $listName.attr("data-name", name);
+        $listName.text(name);
+        $taskContainer.text("");
+        let index = findIndex(name);
+        for(let i=0; i<setOfLists[index].tasks.length; i++){
+            let item = '<li data-task="'+setOfLists[index].tasks[i]+'">'+setOfLists[index].tasks[i]+"</li>";
+            $taskContainer.prepend(item);
+        }
+        
     })
 
     $deleteListBtn.on("click", function(){
@@ -93,6 +114,8 @@ $(function(){
         deleteElement(listName, true);
         $listsContainer.children("li[data-name=\""+listName+"\"]").remove();
     })
+
+
 })
 
 

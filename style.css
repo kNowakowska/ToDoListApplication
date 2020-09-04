@@ -154,3 +154,10 @@ input[type="submit"]:hover{
     letter-spacing: 2px;
     
 }
+.task-list ul{
+    margin: 10px 25px;
+    list-style-type: circle;
+    font-size: 16px;
+    text-transform: uppercase;
+    line-height: 180%;
+}
