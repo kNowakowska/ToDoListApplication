@@ -1,5 +1,20 @@
 $(function(){
-    let setOfLists = ["lista1", "lista5", "moja lista"];
+    
+    let setOfLists = [
+        {
+            name:"lista1",
+            tasks: []
+        },
+        {
+            name: "lista5",
+            tasks: []
+        },
+        {
+            name:"moja lista",
+            tasks: []
+        }
+    ]
+
 
     const $addListBtn = $('.add-list-btn');
     const $listsContainer = $(".panel ul");
@@ -10,7 +25,7 @@ $(function(){
 
     function deleteElement(name, flag){
         for(let i=0; i<setOfLists.length && flag; i++){
-            if(setOfLists[i]==name){
+            if(setOfLists[i].name==name){
                 setOfLists.splice(i,1);
                 flag=false;
             }
@@ -22,7 +37,7 @@ $(function(){
 
     if(setOfLists.length>0){
         for(let i=0; i<setOfLists.length; i++){
-            let item = '<li data-name="'+setOfLists[i]+'">'+setOfLists[i]+' <i class="fas fa-times-circle"></i></li>';
+            let item = '<li data-name="'+setOfLists[i].name+'">'+setOfLists[i].name+' <i class="fas fa-times-circle"></i></li>';
             $(".fa-times-circle").hide();
             $listsContainer.append(item);
         }
@@ -36,7 +51,12 @@ $(function(){
         e.preventDefault();
         let name = $listNameInput.val().trim();
         if(name){
-            setOfLists.push(name);
+            setOfLists.push(
+                {
+                    name: name,
+                    tasks: []
+                }
+            );
             let item = '<li data-name="'+name+'">'+name+' <i class="fas fa-times-circle"></i></li>';
             $listsContainer.append(item);
             $(".fa-times-circle").hide();
@@ -72,7 +92,6 @@ $(function(){
         $listName.text("");
         deleteElement(listName, true);
         $listsContainer.children("li[data-name=\""+listName+"\"]").remove();
-        console.log(setOfLists);
     })
 })
 
