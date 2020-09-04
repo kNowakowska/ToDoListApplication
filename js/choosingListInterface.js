@@ -26,7 +26,7 @@ $(function(){
     const $addTaskBtn = $(".task-options .add-task");
     const $taskContainer = $(".task-list ul");
 
-    function deleteElement(name, flag){
+    function deleteElementFromArray(name, flag){
         for(let i=0; i<setOfLists.length && flag; i++){
             if(setOfLists[i].name==name){
                 setOfLists.splice(i,1);
@@ -85,8 +85,11 @@ $(function(){
         $(this).children().show();
         $(this).on("click", "i", function(){
             let name = $(this).parent().text().trim();
-            $(this).parent().remove();
-           deleteElement(name, true);
+            $(this).parent().removeClass("active").remove();
+            deleteElementFromArray(name, true);
+            $listName.attr("data-name", "");
+            $listName.text("");
+            $taskContainer.text("");
         })
     })
 
@@ -95,6 +98,8 @@ $(function(){
     })
 
     $listsContainer.on("click","li", function(){
+        $listsContainer.children().removeClass("active");
+        $(this).addClass("active");
         let name = $(this).attr("data-name");
         $listName.attr("data-name", name);
         $listName.text(name);
@@ -102,7 +107,7 @@ $(function(){
         let index = findIndex(name);
         for(let i=0; i<setOfLists[index].tasks.length; i++){
             let item = '<li data-task="'+setOfLists[index].tasks[i]+'">'+setOfLists[index].tasks[i]+"</li>";
-            $taskContainer.prepend(item);
+            $taskContainer.append(item);
         }
         
     })
@@ -111,10 +116,35 @@ $(function(){
         let listName = $listName.attr("data-name");
         $listName.attr("data-name", "");
         $listName.text("");
-        deleteElement(listName, true);
-        $listsContainer.children("li[data-name=\""+listName+"\"]").remove();
+        $taskContainer.text("");
+        deleteElementFromArray(listName, true);
+        $listsContainer.children("li[data-name=\""+listName+"\"]").removeClass("active").remove();
+        
     })
 
+    $addTaskBtn.on("click", function(){
+        if($listsContainer.children("li.active").length){
+            $addTaskForm.show();
+        }else{
+            alert("Musisz wybrać listę!");
+        }
+        
+    })
+    $addTaskForm.on("submit", function(e){
+        e.preventDefault();
+        let task = $("input.task-name").val().trim();
+        if(task!=""){
+            let listName = $listsContainer.children("li.active").attr("data-name");
+            let index = findIndex(listName);
+            setOfLists[index].tasks.push(task);
+            let item = '<li data-task="'+task+'">'+task+'</li>';
+            $taskContainer.append(item);
+            $addTaskForm.children("input:text").val("");
+            $addTaskForm.hide();
+        }else{
+            alert("Musisz podać nazwę zadania!");
+        }
+    })
 
 })
 
