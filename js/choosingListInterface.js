@@ -160,12 +160,12 @@ $(function(){
         let prevName = $listName.text();
         let nextName = $listNameEdit.val();
         $listNameEdit.hide();
-        console.log(nextName)
+        
         //zamiana w tablicy
         setOfLists[findIndex(prevName)].name = nextName;
         prevName=nextName;
         
-        console.log(setOfLists);
+    
         //zamiana na liście list
         $listsContainer.children("li.active").attr("data-name", nextName).text(nextName);
 
@@ -173,6 +173,45 @@ $(function(){
         $listName.attr("data-name", nextName).text(nextName);
         $listName.show();
     })
+
+    let $currentTask;
+    let task;
+    let $inputEl;
+
+    $taskContainer.on("dblclick", "li", function(){
+        $inputEl= $('<input type="text">');
+        $currentTask = $(this);
+        task = $(this).text();
+        $inputEl.val(task);
+
+        $(this).hide();
+        $(this).after($inputEl)
+
+
+       // $(this).replaceWith($inputEl);
+    })
+
+    $taskContainer.on("blur", "input",function(){
+        console.log("blur")
+        let editTask = $(this).val();
+        
+        $currentTask.attr("data-task", editTask).text(editTask);
+
+        $(this).remove();
+        $currentTask.show();
+        //$(this).replaceWith($currentTask);
+       
+        // aktualizacja tablicy obiektów
+        const index = findIndex($listName.attr("data-name"));
+        for(let i=0; i<setOfLists[index].tasks.length; i++){
+            if(setOfLists[index].tasks[i].trim()==task.trim()){
+                setOfLists[index].tasks[i]=editTask;
+                console.log(setOfLists[index].tasks);
+            }
+        }
+    })
+
+    
 })
 
 

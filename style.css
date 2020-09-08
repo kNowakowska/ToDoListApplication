@@ -175,6 +175,20 @@ input[type="submit"]:hover{
     line-height: 180%;
 }
 
+.task-list ul input{
+    
+    font-size: 15px;
+    text-transform: uppercase;
+    /* line-height: 180%; */
+    border:none;
+    background-color: whitesmoke;
+}
+
+.task-list ul input:focus{
+    outline:none;
+    border: 1px solid rgba(0,0,0,0.4);
+}
+
 .new-task-form .task-name{
     width: 40%;
     margin-left: 20px;
