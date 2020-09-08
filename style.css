@@ -151,8 +151,21 @@ input[type="submit"]:hover{
     padding: 20px 0;
     text-align: center;
     text-transform: uppercase;
+    letter-spacing: 2px; 
+}
+
+.task-list .list-name-edit{
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    border: none;
+    text-transform: uppercase;
     letter-spacing: 2px;
-    
+    font-size: 1.5em;
+    background-color: whitesmoke;
+}
+.list-name-edit:focus{
+    outline: none;
 }
 .task-list ul{
     margin: 10px 25px;

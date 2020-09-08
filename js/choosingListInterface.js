@@ -25,6 +25,7 @@ $(function(){
     const $addTaskForm = $(".task-list form");
     const $addTaskBtn = $(".task-options .add-task");
     const $taskContainer = $(".task-list ul");
+    const $listNameEdit = $(".list-name-edit");
 
     function deleteElementFromArray(name, flag){
         for(let i=0; i<setOfLists.length && flag; i++){
@@ -45,6 +46,7 @@ $(function(){
 
     $newListForm.hide();
     $addTaskForm.hide();
+    $listNameEdit.hide();
 
 
     if(setOfLists.length>0){
@@ -100,9 +102,11 @@ $(function(){
     $listsContainer.on("click","li", function(){
         $listsContainer.children().removeClass("active");
         $(this).addClass("active");
+        $listNameEdit.hide();
+        $listName.show();
+        $listNameEdit.val($(this).attr("data-name"))
         let name = $(this).attr("data-name");
-        $listName.attr("data-name", name);
-        $listName.text(name);
+        $listName.attr("data-name", name).text(name);
         $taskContainer.text("");
         let index = findIndex(name);
         for(let i=0; i<setOfLists[index].tasks.length; i++){
@@ -146,6 +150,29 @@ $(function(){
         }
     })
 
+    $listName.on("dblclick", function(){
+        $(this).hide();
+        $listNameInput.val($(this).attr("data-name"));
+        $listNameEdit.show();
+       
+    })
+    $listNameEdit.on("blur", function(){
+        let prevName = $listName.text();
+        let nextName = $listNameEdit.val();
+        $listNameEdit.hide();
+        console.log(nextName)
+        //zamiana w tablicy
+        setOfLists[findIndex(prevName)].name = nextName;
+        prevName=nextName;
+        
+        console.log(setOfLists);
+        //zamiana na liście list
+        $listsContainer.children("li.active").attr("data-name", nextName).text(nextName);
+
+
+        $listName.attr("data-name", nextName).text(nextName);
+        $listName.show();
+    })
 })
 
 
