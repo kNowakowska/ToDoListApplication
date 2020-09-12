@@ -24,9 +24,10 @@ $(function(){
     const $deleteListBtn = $(".task-options .delete-list");
     const $addTaskForm = $(".task-list form");
     const $addTaskBtn = $(".task-options .add-task");
-    const $taskContainer = $(".task-list ul");
+    const $taskContainer = $(".task-list ol");
     const $listNameEdit = $(".list-name-edit");
 
+    //Function deleting list from the array setOfLists if it is deleted from the list container
     function deleteElementFromArray(name, flag){
         for(let i=0; i<setOfLists.length && flag; i++){
             if(setOfLists[i].name==name){
@@ -36,6 +37,7 @@ $(function(){
         }
     }
 
+    //Function finding index of the list in the array setOfLists basing on its title
     function findIndex(title){
         for(let i=0; i<setOfLists.length; i++){
             if(setOfLists[i].name==title){
@@ -44,11 +46,21 @@ $(function(){
         }
     }
 
+    //Function deciding if list with given title exists
+    function isExist(title){
+        for(let i=0; i<setOfLists.length; i++){
+            if(setOfLists[i].name.toUpperCase()==title.toUpperCase()){
+                return true;
+            }
+        }
+        return false;
+    }
+
     $newListForm.hide();
     $addTaskForm.hide();
     $listNameEdit.hide();
 
-
+    //filling list container with saved lists from the array
     if(setOfLists.length>0){
         for(let i=0; i<setOfLists.length; i++){
             let item = '<li data-name="'+setOfLists[i].name+'">'+setOfLists[i].name+' <i class="fas fa-times-circle"></i></li>';
@@ -58,14 +70,16 @@ $(function(){
         }
     }
 
+    //showing the form of adding new list
     $addListBtn.on("click", function(){
         $newListForm.show();
     })
 
+    //adding list to the container and the array by the form
     $newListForm.on("submit", function(e){
         e.preventDefault();
         let name = $listNameInput.val().trim();
-        if(name){
+        if(name && !(isExist(name))){
             setOfLists.push(
                 {
                     name: name,
@@ -77,11 +91,12 @@ $(function(){
             $(".fa-times-circle").hide();
             $listNameInput.val("");
         }else{
-            alert("Podaj nazwę listy!");
+            alert("Podaj unikanlną nazwę listy!");
         }
         $newListForm.hide();
     })
     
+    //showing the X-icon and deleting list from the container by clicking the icon
     $listsContainer.on("mouseover","li", function(){
 
         $(this).children().show();
@@ -95,10 +110,12 @@ $(function(){
         })
     })
 
+    //hiding the X-icon when the mouse is out of the element
     $listsContainer.on("mouseout","li", function(){
         $(this).children().hide();
     })
 
+    //showing tasks on the list after clicking the list name
     $listsContainer.on("click","li", function(){
         $listsContainer.children().removeClass("active");
         $(this).addClass("active");
@@ -110,12 +127,13 @@ $(function(){
         $taskContainer.text("");
         let index = findIndex(name);
         for(let i=0; i<setOfLists[index].tasks.length; i++){
-            let item = '<li data-task="'+setOfLists[index].tasks[i]+'">'+setOfLists[index].tasks[i]+"</li>";
+            let item = '<li data-task="'+setOfLists[index].tasks[i]+'" value="'+i+'">'+setOfLists[index].tasks[i]+"</li>";
             $taskContainer.append(item);
         }
         
     })
 
+    //deleting list when its active by the trash-icon
     $deleteListBtn.on("click", function(){
         let listName = $listName.attr("data-name");
         $listName.attr("data-name", "");
@@ -126,6 +144,7 @@ $(function(){
         
     })
 
+    //showing form to add new task to the list by clicking the plus-icon
     $addTaskBtn.on("click", function(){
         if($listsContainer.children("li.active").length){
             $addTaskForm.show();
@@ -134,6 +153,8 @@ $(function(){
         }
         
     })
+
+    //adding task to the active list
     $addTaskForm.on("submit", function(e){
         e.preventDefault();
         let task = $("input.task-name").val().trim();
@@ -141,7 +162,7 @@ $(function(){
             let listName = $listsContainer.children("li.active").attr("data-name");
             let index = findIndex(listName);
             setOfLists[index].tasks.push(task);
-            let item = '<li data-task="'+task+'">'+task+'</li>';
+            let item = '<li data-task="'+task+'" value="'+(setOfLists[index].tasks.length-1)+'" >'+task+'</li>';
             $taskContainer.append(item);
             $addTaskForm.children("input:text").val("");
             $addTaskForm.hide();
@@ -150,12 +171,15 @@ $(function(){
         }
     })
 
+    //showing form to edit list name by double clicking on it
     $listName.on("dblclick", function(){
         $(this).hide();
         $listNameInput.val($(this).attr("data-name"));
         $listNameEdit.show();
        
     })
+    
+    //exact editing the name list in the list container and array
     $listNameEdit.on("blur", function(){
         let prevName = $listName.text();
         let nextName = $listNameEdit.val();
@@ -176,12 +200,15 @@ $(function(){
 
     let $currentTask;
     let task;
+    let taskNumber;
     let $inputEl;
 
+    //showing form to edit task name after double clicking on it
     $taskContainer.on("dblclick", "li", function(){
         $inputEl= $('<input type="text">');
         $currentTask = $(this);
         task = $(this).text();
+        taskNumber = $(this).attr("value");
         $inputEl.val(task);
 
         $(this).hide();
@@ -191,6 +218,7 @@ $(function(){
        // $(this).replaceWith($inputEl);
     })
 
+    //exact editing task name in the task container and an object in the list array
     $taskContainer.on("blur", "input",function(){
         console.log("blur")
         let editTask = $(this).val();
@@ -203,12 +231,11 @@ $(function(){
        
         // aktualizacja tablicy obiektów
         const index = findIndex($listName.attr("data-name"));
-        for(let i=0; i<setOfLists[index].tasks.length; i++){
-            if(setOfLists[index].tasks[i].trim()==task.trim()){
-                setOfLists[index].tasks[i]=editTask;
-                console.log(setOfLists[index].tasks);
-            }
-        }
+        
+        setOfLists[index].tasks[taskNumber]=editTask;
+        console.log(setOfLists[index].tasks);
+            
+        
     })
 
     

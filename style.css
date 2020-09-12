@@ -167,7 +167,7 @@ input[type="submit"]:hover{
 .list-name-edit:focus{
     outline: none;
 }
-.task-list ul{
+.task-list ol{
     margin: 10px 25px;
     list-style-type: circle;
     font-size: 16px;
@@ -175,7 +175,7 @@ input[type="submit"]:hover{
     line-height: 180%;
 }
 
-.task-list ul input{
+.task-list ol input{
     
     font-size: 15px;
     text-transform: uppercase;
@@ -184,7 +184,7 @@ input[type="submit"]:hover{
     background-color: whitesmoke;
 }
 
-.task-list ul input:focus{
+.task-list ol input:focus{
     outline:none;
     border: 1px solid rgba(0,0,0,0.4);
 }
