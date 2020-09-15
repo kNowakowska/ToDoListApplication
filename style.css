@@ -105,35 +105,31 @@ input[type="submit"]:hover{
 
 .new-list-form .list-name{
     width: 50%;
-    line-height: 200%;
-    background-color:rgba(165, 42, 42, 0.4) ;
     border: 3px solid brown;
-
+    line-height: 200%;
+    background-color:rgba(165, 42, 42, 0.4);
 }
 
 .new-list-form .submit-new-list{
     width: 20%;
-    line-height: 200%;
     padding: 20px auto;
-    background-color: brown;
-    color: white;
     border: 3px solid brown;
     border-radius: 5%;
-    
+    line-height: 200%;
+    background-color: brown;
+    color: white;
 }
 
 .panel ul{
-
-    text-align: left;
     padding-left: 30px;
+    text-align: left;
 }
 
 .panel ul li{
-    line-height: 180%;
-    margin: 20px 0;
-    text-transform: uppercase;
     width: auto;
-    
+    margin: 20px 0;
+    line-height: 180%;
+    text-transform: uppercase;
 }
 .panel ul li i{
     font-size: 20px;
@@ -156,9 +152,9 @@ input[type="submit"]:hover{
 
 .task-list .list-name-edit{
     width: 100%;
-    text-align: center;
     padding: 20px 0;
     border: none;
+    text-align: center;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 1.5em;
@@ -176,11 +172,9 @@ input[type="submit"]:hover{
 }
 
 .task-list ol input{
-    
+    border: 1px solid rgba(0,0,0,0.4);
     font-size: 15px;
     text-transform: uppercase;
-    /* line-height: 180%; */
-    border: 1px solid rgba(0,0,0,0.4);
     background-color: whitesmoke;
 }
 

@@ -2,16 +2,16 @@ $(function(){
     
     let setOfLists = [
         {
-            name:"lista1",
+            name:"list 1",
             tasks: ["sleep", "eat","do things"]
         },
         {
-            name: "lista5",
+            name: "list 2",
             tasks: ["code", "code", "code"]
         },
         {
-            name:"moja lista",
-            tasks: ["nic"]
+            name:"my list",
+            tasks: ["nothing"]
         }
     ]
 
@@ -64,7 +64,6 @@ $(function(){
             $(this).attr("value", i);
             i++;
         })
-
     }
 
     $newListForm.hide();
@@ -109,7 +108,6 @@ $(function(){
     
     //showing the X-icon and deleting list from the container by clicking the icon
     $listsContainer.on("mouseover","li", function(){
-
         $(this).children().show();
         $(this).on("click", "i", function(){
             let name = $(this).parent().text().trim();
@@ -195,16 +193,9 @@ $(function(){
         let prevName = $listName.text();
         let nextName = $listNameEdit.val();
         $listNameEdit.hide();
-        
-        //zamiana w tablicy
         setOfLists[findIndex(prevName)].name = nextName;
         prevName=nextName;
-        
-    
-        //zamiana na liście list
         $listsContainer.children("li.active").attr("data-name", nextName).text(nextName);
-
-
         $listName.attr("data-name", nextName).text(nextName);
         $listName.show();
     })
@@ -221,37 +212,24 @@ $(function(){
         task = $(this).text();
         taskNumber = $(this).attr("value");
         $inputEl.val(task);
-
         $(this).hide();
         $(this).after($inputEl)
-
-
-       // $(this).replaceWith($inputEl);
     })
 
     //exact editing task name in the task container and an object in the list array
     $taskContainer.on("blur", "input",function(){
         let editTask = $(this).val();
-        
         $currentTask.attr("data-task", editTask).text(editTask);
-
         $(this).remove();
         $currentTask.show();
-        //$(this).replaceWith($currentTask);
-       
-        // aktualizacja tablicy obiektów
         const index = findIndex($listName.attr("data-name"));
-        
         setOfLists[index].tasks[taskNumber]=editTask;
-            
-        
     })
 
     //selecting tasks in the task container
     $taskContainer.on("click", "li", function(){
         let $task = $(this);
         let $icon;
-
         if(!($task.hasClass("selected"))){
             $icon=$('<i class="far fa-check-square"></i>');
             $(this).children("i").replaceWith($icon);
@@ -277,7 +255,6 @@ $(function(){
         
     })
 
-    
 })
 
 
