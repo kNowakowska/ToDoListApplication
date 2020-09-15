@@ -169,7 +169,7 @@ input[type="submit"]:hover{
 }
 .task-list ol{
     margin: 10px 25px;
-    list-style-type: circle;
+    list-style-type: none;
     font-size: 16px;
     text-transform: uppercase;
     line-height: 180%;
@@ -180,13 +180,21 @@ input[type="submit"]:hover{
     font-size: 15px;
     text-transform: uppercase;
     /* line-height: 180%; */
-    border:none;
+    border: 1px solid rgba(0,0,0,0.4);
     background-color: whitesmoke;
 }
 
 .task-list ol input:focus{
     outline:none;
     border: 1px solid rgba(0,0,0,0.4);
+}
+.task-list ol li i{
+    position: relative;
+    left: -1%;
+}
+
+.task-list ol li:hover{
+    cursor:pointer;
 }
 
 .new-task-form .task-name{

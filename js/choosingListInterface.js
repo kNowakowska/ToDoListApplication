@@ -24,6 +24,7 @@ $(function(){
     const $deleteListBtn = $(".task-options .delete-list");
     const $addTaskForm = $(".task-list form");
     const $addTaskBtn = $(".task-options .add-task");
+    const $deleteTasksBtn = $(".task-options .delete-selected");
     const $taskContainer = $(".task-list ol");
     const $listNameEdit = $(".list-name-edit");
 
@@ -54,6 +55,16 @@ $(function(){
             }
         }
         return false;
+    }
+    
+    //Function updating value attribute of task lits items after deleting some of them
+    function updateListItemsValues(){
+        let i=0;
+        $taskContainer.children("li").each(function(){
+            $(this).attr("value", i);
+            i++;
+        })
+
     }
 
     $newListForm.hide();
@@ -127,7 +138,7 @@ $(function(){
         $taskContainer.text("");
         let index = findIndex(name);
         for(let i=0; i<setOfLists[index].tasks.length; i++){
-            let item = '<li data-task="'+setOfLists[index].tasks[i]+'" value="'+i+'">'+setOfLists[index].tasks[i]+"</li>";
+            let item = '<li data-task="'+setOfLists[index].tasks[i]+'" value="'+i+'">'+'<i class="far fa-square"></i>'+setOfLists[index].tasks[i]+"</li>";
             $taskContainer.append(item);
         }
         
@@ -162,7 +173,7 @@ $(function(){
             let listName = $listsContainer.children("li.active").attr("data-name");
             let index = findIndex(listName);
             setOfLists[index].tasks.push(task);
-            let item = '<li data-task="'+task+'" value="'+(setOfLists[index].tasks.length-1)+'" >'+task+'</li>';
+            let item = '<li data-task="'+task+'" value="'+(setOfLists[index].tasks.length-1)+'" >'+'<i class="far fa-square"></i>'+task+'</li>';
             $taskContainer.append(item);
             $addTaskForm.children("input:text").val("");
             $addTaskForm.hide();
@@ -220,7 +231,6 @@ $(function(){
 
     //exact editing task name in the task container and an object in the list array
     $taskContainer.on("blur", "input",function(){
-        console.log("blur")
         let editTask = $(this).val();
         
         $currentTask.attr("data-task", editTask).text(editTask);
@@ -233,8 +243,37 @@ $(function(){
         const index = findIndex($listName.attr("data-name"));
         
         setOfLists[index].tasks[taskNumber]=editTask;
-        console.log(setOfLists[index].tasks);
             
+        
+    })
+
+    //selecting tasks in the task container
+    $taskContainer.on("click", "li", function(){
+        let $task = $(this);
+        let $icon;
+
+        if(!($task.hasClass("selected"))){
+            $icon=$('<i class="far fa-check-square"></i>');
+            $(this).children("i").replaceWith($icon);
+            $task.addClass("selected");
+        }else{
+            $icon=$('<i class="far fa-square"></i>');
+            $(this).children("i").replaceWith($icon);
+            $task.removeClass("selected");
+        }
+    })
+
+    //deleting selected tasks from the list and array
+    $deleteTasksBtn.on("click", function()  {
+        let indexOfTask=[];
+        $taskContainer.children("li.selected").each(function(){
+            indexOfTask.push($(this).attr("value"));
+            $(this).remove();
+        })
+        for(let i=indexOfTask.length-1; i>=0; i--){
+            setOfLists[findIndex($listName.attr("data-name"))].tasks.splice(indexOfTask[i],1);
+        }
+        updateListItemsValues();
         
     })
 
